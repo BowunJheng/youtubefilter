@@ -1,0 +1,35 @@
+{
+  "name": "Youtube Blacklist",
+  "description" : "Base Level Extension",
+  "version": "1.0",
+  "browser_action": {
+    "default_popup": "keyword.html",
+    "default_icon": "hello_extensions.png"
+  },
+ "permissions": [
+            "storage",
+            "tabs",
+            "activeTab",
+            "webNavigation",
+            "*://*.youtube.com/*"
+        ],
+"content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "run_at": "document_start",
+      "js": ["background.js"]
+    }
+  ],
+"background": {
+    "scripts": ["background.js"]
+  },
+  "manifest_version": 2,
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F"
+      },
+      "description": "Opens keyword.html"
+    }
+  }
+}
