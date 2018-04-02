@@ -22,11 +22,19 @@ chrome.tabs.onUpdated.addListener(function(tabid, changeinfo, tab) {
     if (tab.url !== undefined && lastTitle != tab.title) {
         var urlArray = tab.url.split('/');
         if (urlArray[2].indexOf('.youtube.') != -1) {
-            chrome.tabs.update(tabid, {
-                selected: true
-            });
-            chrome.tabs.executeScript(tabid, {
-                code: 'blackListFilter("' + tab.title + '",3);'
+            chrome.tabs.query({
+                active: true,
+                lastFocusedWindow: true
+            }, function(array_of_Tabs) {
+                chrome.tabs.update(tabid, {
+                    selected: true
+                });
+                chrome.tabs.executeScript(tabid, {
+                    code: 'blackListFilter("' + tab.title + '",3);'
+                });
+                chrome.tabs.update(array_of_Tabs[0].id, {
+                    selected: true
+                });
             });
         }
         lastTitle = tab.title;
